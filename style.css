@@ -109,9 +109,8 @@ strong { font-weight: 800; }
   width: 65vmax;
   height: 65vmax;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.5;
-  mix-blend-mode: screen;
+  opacity: 0.55;
+  will-change: transform;
   animation: drift 24s ease-in-out infinite alternate;
 }
 .aurora span:nth-child(1) { background: radial-gradient(circle, rgba(11,138,92,.75), transparent 65%);  top: -28vmax; left: -22vmax; }
@@ -1423,6 +1422,140 @@ body::after {
   .ribbon__track { font-size: 1.2rem; }
   .ribbons { height: 120px; }
 }
+
+/* =========================================================
+   DODACI: datum u naslovu, razdelnici, broj ulaznice
+   ========================================================= */
+.hero__date {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem 0.8rem;
+  margin-top: 1rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 4.2vw, 1.5rem);
+  color: var(--champagne);
+  background: linear-gradient(90deg, rgba(11,138,92,.35), rgba(20,10,35,.6) 50%, rgba(106,47,201,.4));
+  border: 1.5px solid rgba(236, 199, 125, 0.55);
+  box-shadow: 0 12px 30px -12px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.hero__date i { font-style: normal; font-size: 0.75em; color: var(--gold); }
+@media (max-width: 520px) {
+  .hero__date { flex-wrap: nowrap; white-space: nowrap; gap: 0.45rem; padding: 0.6rem 1.05rem; font-size: 1.05rem; }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  margin: -1.5rem auto;
+  width: min(80%, 420px);
+}
+.divider span { flex: 1; height: 1.5px; background: linear-gradient(90deg, transparent, rgba(236,199,125,.7)); }
+.divider span:last-child { transform: scaleX(-1); }
+.divider i { width: 9px; height: 9px; border-radius: 50%; }
+.divider i:first-of-type { background: #17a873; box-shadow: 0 0 10px rgba(23,168,115,.8); }
+.divider i:last-of-type  { background: #7a42d6; box-shadow: 0 0 10px rgba(122,66,214,.8); }
+.divider b {
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(135deg, #fff3d4, var(--gold) 50%, var(--gold-deep));
+  transform: rotate(45deg);
+  box-shadow: 0 0 14px rgba(236,199,125,.6);
+}
+
+.ticket__no {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.6rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+  color: rgba(169, 123, 51, 0.75);
+}
+.ticket__label { padding-right: 4.5rem; }
+
+/* kartice: tanka zlatna linija iznutra */
+.card { box-shadow: 0 40px 80px -24px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.1), inset 0 0 0 1px rgba(236,199,125,.07); }
+
+/* sloj za glatko pomeranje */
+.nine, .balloon, .stage__halo, .stage__orbit i, .ribbon__track { will-change: transform; }
+
+/* animacije van ekrana miruju (štedi bateriju i procesor) */
+.is-paused,
+.is-paused *,
+.is-paused *::before,
+.is-paused *::after { animation-play-state: paused !important; }
+
+/* =========================================================
+   LAKI REŽIM – telefoni i slabiji uređaji
+   Izgleda skoro isto, ali bez najskupljih efekata.
+   ========================================================= */
+html.lite body::after { display: none; }                       /* bez zrnaste teksture */
+html.lite .aurora span { animation: none; will-change: auto; }  /* svetla miruju */
+html.lite .aurora span:nth-child(n+4) { display: none; }
+html.lite .vignette { display: none; }
+
+/* bez zamućenog stakla – umesto njega gušća pozadina */
+html.lite .card {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(11,138,92,.18), transparent 50%),
+    radial-gradient(120% 80% at 100% 100%, rgba(106,47,201,.22), transparent 50%),
+    linear-gradient(160deg, #1f0d36 0%, #120a22 50%, #08201a 100%);
+}
+html.lite .modal::backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; }
+
+/* rub kartica stoji (ne vrti se) */
+html.lite .card::before {
+  animation: none;
+  background: linear-gradient(135deg, rgba(23,168,115,.9), transparent 30%, rgba(236,199,125,.7) 50%, transparent 70%, rgba(122,66,214,.95));
+}
+
+/* sjaj folije bez stalnog preračunavanja */
+html.lite .eyebrow,
+html.lite .section-title em,
+html.lite .person__color,
+html.lite .hero__title,
+html.lite .finale__title,
+html.lite .nine__face { animation: none; background-position: 50% 0; }
+html.lite .intro__hello { animation: fadeDown 1s ease both; background-position: 50% 0; }
+html.lite .hero__names.is-visible .name { animation: write 1.9s cubic-bezier(0.6, 0.1, 0.3, 1) forwards; background-position: 50% 0; }
+html.lite .hero__names.is-visible .name--purple { animation-delay: 0.9s; }
+html.lite .name,
+html.lite .hero__title,
+html.lite .finale__title,
+html.lite .person__name { filter: none; }
+
+/* oreol iza 99 bez zamućenja */
+html.lite .stage__halo {
+  filter: none;
+  animation: none;
+  width: 90%;
+  opacity: 1;
+  background: radial-gradient(circle, rgba(236,199,125,.28) 0%, rgba(106,47,201,.28) 30%, rgba(11,138,92,.2) 50%, transparent 70%);
+}
+html.lite .envelope__glow { filter: none; animation: none; }
+html.lite .intro__rays { animation: none; }
+
+/* dugmad: bez preračunavanja pozadine i senke */
+html.lite .btn { animation: none; }
+html.lite .btn--pulse { animation: pulseScale 2.2s ease-in-out infinite; }
+@keyframes pulseScale { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+/* baloni, zvezdice i ulaznica bez skupih senki */
+html.lite .balloon__body { filter: none; }
+html.lite .sparkle { box-shadow: none; }
+html.lite .ticket-shadow { filter: none; }
+html.lite .ticket { box-shadow: none; }
+html.lite .info__row:hover { transform: none; }
 
 /* manje pokreta za one kojima to smeta */
 @media (prefers-reduced-motion: reduce) {

@@ -7,6 +7,8 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const isSmall = () => window.innerWidth < 600;
+  const LITE = document.documentElement.classList.contains('lite');   // telefon / slabiji uređaj
+  const FX = LITE ? 0.5 : 1;                                           // koliko čestica
 
   const EVENT = {
     start: new Date(2026, 11, 11, 19, 0, 0),            // 11. decembar 2026, 19:00
@@ -29,7 +31,7 @@
      ========================================================= */
   (function makeSparkles() {
     const box = $('#sparkles');
-    const count = isSmall() ? 26 : 50;
+    const count = LITE ? 16 : 50;
     const frag = document.createDocumentFragment();
     for (let i = 0; i < count; i++) {
       const s = document.createElement('span');
@@ -106,7 +108,7 @@
     return state;
   }
 
-  const cf = setupCanvas($('#confetti'), 2);
+  const cf = setupCanvas($('#confetti'), LITE ? 1.5 : 2);
   let particles = [];
   let cfRunning = false;
 
@@ -127,11 +129,12 @@
    */
   function burst(x, y, o = {}) {
     const kind = o.kind || 'confetti';
-    const count = Math.round((o.count || 80) * (reduceMotion ? 0.3 : 1));
+    const count = Math.max(1, Math.round((o.count || 80) * (reduceMotion ? 0.3 : FX)));
     const angle = ((o.angle ?? -90) * Math.PI) / 180;
     const spread = ((o.spread ?? 360) * Math.PI) / 180;
     const speed = o.speed || 9;
-    for (let i = 0; i < count; i++) {
+    const cap = LITE ? 320 : 900;                    // gornja granica – nikad previše odjednom
+    for (let i = 0; i < count && particles.length < cap; i++) {
       const a = angle + (Math.random() - 0.5) * spread;
       const v = speed * rand(0.45, 1.15);
       const r = Math.random();
@@ -155,10 +158,27 @@
     if (!cfRunning) { cfRunning = true; requestAnimationFrame(cfTick); }
   }
 
+  // kiša konfeta – jedan tajmer umesto stotinu
   function rain(count = 120) {
-    for (let i = 0; i < count; i++) {
-      setTimeout(() => burst(rand(0, cf.W), -20, { count: 1, angle: 90, spread: 40, speed: 3 }), rand(0, 1800));
-    }
+    count = Math.round(count * FX);
+    const start = performance.now();
+    let made = 0;
+    const step = (now) => {
+      const target = Math.min(count, Math.round(((now - start) / 1800) * count));
+      for (; made < target; made++) {
+        particles.push({
+          kind: 'confetti', x: rand(0, cf.W), y: -20,
+          vx: rand(-1, 1), vy: rand(1, 3), g: rand(0.06, 0.12),
+          w: rand(6, 13), h: rand(4, 8), size: 0,
+          rot: rand(0, Math.PI * 2), vr: rand(-0.2, 0.2),
+          color: pick(COLORS), shape: pick(['rect', 'rect', 'circle', 'star', 'ribbon']),
+          life: 0, maxLife: rand(160, 240)
+        });
+      }
+      if (!cfRunning) { cfRunning = true; requestAnimationFrame(cfTick); }
+      if (made < count) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   }
 
   function cfTick() {
@@ -181,9 +201,8 @@
       ctx.rotate(p.rot);
       ctx.fillStyle = p.color;
       if (p.kind === 'spark') {
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 8;
-        drawStar(ctx, p.size * (0.6 + fade * 0.6));
+        // (bez shadowBlur – to je bilo najskuplje na telefonu)
+        drawStar(ctx, p.size * (0.7 + fade * 0.7));
       } else if (p.shape === 'circle') {
         ctx.beginPath();
         ctx.arc(0, 0, p.h / 2, 0, Math.PI * 2);
@@ -212,7 +231,7 @@
   /* =========================================================
      VATROMET (iza kartica)
      ========================================================= */
-  const fw = setupCanvas($('#fireworks'), 1.5);
+  const fw = setupCanvas($('#fireworks'), LITE ? 1 : 1.5);
   const FW_PALETTES = [
     ['#6dffcb', '#00d68f', '#b6ffe6', '#ffffff'],           // Olivera
     ['#d77dff', '#9d5cff', '#e6ccff', '#ffffff'],           // Aleksandra
@@ -239,7 +258,7 @@
   }
 
   function explode(r) {
-    const n = isSmall() ? 55 : 80;
+    const n = LITE ? 42 : 80;
     const ring = Math.random() < 0.35;          // ponekad savršen krug
     for (let i = 0; i < n; i++) {
       const a = ring ? (i / n) * Math.PI * 2 : rand(0, Math.PI * 2);
@@ -304,6 +323,7 @@
   }
 
   function fireworksShow(n = 5) {
+    if (LITE) n = Math.ceil(n / 2);
     for (let i = 0; i < n; i++) setTimeout(() => launchRocket(), i * rand(220, 420));
   }
 
@@ -311,8 +331,8 @@
   function ambientFireworks() {
     if (reduceMotion) return;
     const next = () => {
-      if (!document.hidden) launchRocket();
-      setTimeout(next, rand(2600, 5200));
+      if (!document.hidden && rockets.length + embers.length < 120) launchRocket();
+      setTimeout(next, LITE ? rand(5000, 9000) : rand(2600, 5200));
     };
     setTimeout(next, 2500);
   }
@@ -333,7 +353,7 @@
   const HEART_PATH = 'M50 116C22 94 3 72 3 46 3 25 18 10 35 10c8 0 13 4 15 10 2-6 7-10 15-10 17 0 32 15 32 36 0 26-19 48-47 70z';
   const KNOT_PATH = 'M44 125l6-9 6 9z';
 
-  const maxBalloons = () => (reduceMotion ? 4 : isSmall() ? 9 : 15);
+  const maxBalloons = () => (reduceMotion ? 4 : LITE ? 6 : 15);
   let activeBalloons = 0;
   let poppedCount = 0;
   let uid = 0;
@@ -411,13 +431,13 @@
 
   function startBalloons() {
     for (let i = 0; i < maxBalloons(); i++) spawnBalloon(+(i * 0.32).toFixed(2));
-    setInterval(() => spawnBalloon(0), 1500);
+    setInterval(() => spawnBalloon(0), LITE ? 2400 : 1500);
   }
 
   /* =========================================================
      ISKRICE KOJE PRATE PRST / MIŠ
      ========================================================= */
-  if (!reduceMotion) {
+  if (!reduceMotion && finePointer && !LITE) {
     let lastTrail = 0;
     const TRAIL = ['#6dffcb', '#e6ccff', '#fdeec9', '#d77dff', '#ffffff'];
     window.addEventListener('pointermove', (e) => {
@@ -478,6 +498,13 @@
       });
     }, { threshold: 0.15 });
     items.forEach((el) => io.observe(el));
+
+    // animacije delova koji nisu na ekranu miruju
+    const sections = $$('.hero, .ribbons, .duo, .invite > .card, .ticket-wrap, .finale');
+    const pauser = new IntersectionObserver((entries) => {
+      entries.forEach((en) => en.target.classList.toggle('is-paused', !en.isIntersecting));
+    }, { rootMargin: '120px 0px' });
+    sections.forEach((el) => pauser.observe(el));
   }
 
   /* =========================================================

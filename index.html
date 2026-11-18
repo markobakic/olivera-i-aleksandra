@@ -11,6 +11,15 @@
   <meta property="og:title" content="Žurka 99 · Olivera &amp; Aleksandra">
   <meta property="og:description" content="Zajedno punimo 99 godina! Petak, 11. decembar, od 19h · Restoran Institucija, Bežanijska kosa. Dress code: zeleno i ljubičasto. Ulaznica: 2 balona – zeleni i ljubičasti!">
 
+  <!-- "Laki režim" za telefone i slabije uređaje – uključuje se pre iscrtavanja stranice -->
+  <script>
+    (function () {
+      var touch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 820;
+      var weak = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
+      if (touch || weak) document.documentElement.classList.add('lite');
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Great+Vibes&family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet">
@@ -86,7 +95,11 @@
       <p class="hero__title reveal" style="--d:3">Žurka 99</p>
       <p class="hero__sub reveal" style="--d:4">Zajedno punimo <strong>99&nbsp;godina</strong> — i to mora da se proslavi!</p>
 
-      <a href="#detalji" class="btn btn--ghost scroll-cue reveal" style="--d:5">
+      <p class="hero__date reveal" style="--d:5">
+        <span>Petak</span><i aria-hidden="true">✦</i><span>11. decembar</span><i aria-hidden="true">✦</i><span>19h</span>
+      </p>
+
+      <a href="#detalji" class="btn btn--ghost scroll-cue reveal" style="--d:6">
         Pogledajte detalje <span class="scroll-cue__arrow" aria-hidden="true">↓</span>
       </a>
     </header>
@@ -124,6 +137,8 @@
 
       <p class="duo__equals"><span aria-hidden="true">=</span> 99 godina radosti, smeha i prijateljstva</p>
     </section>
+
+    <div class="divider" aria-hidden="true"><span></span><i></i><b></b><i></i><span></span></div>
 
     <!-- Kada i gde -->
     <section class="card details reveal" id="detalji" aria-labelledby="details-title">
@@ -219,6 +234,8 @@
       </ul>
     </section>
 
+    <div class="divider" aria-hidden="true"><span></span><i></i><b></b><i></i><span></span></div>
+
     <!-- Ulaznica -->
     <section class="ticket-wrap reveal" aria-labelledby="ticket-title">
       <div class="sec-head">
@@ -229,6 +246,7 @@
       <div class="ticket-shadow">
       <div class="ticket tilt">
         <div class="ticket__main">
+          <span class="ticket__no" aria-hidden="true">№ 099</span>
           <p class="ticket__label">Ulaznica za Žurku 99</p>
           <p class="ticket__big">2 balona</p>
           <p class="ticket__text">
