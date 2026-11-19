@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Žurka 99 · Olivera &amp; Aleksandra</title>
   <meta name="description" content="Pozivnica za Žurku 99 — Olivera i Aleksandra zajedno pune 99 godina! Petak, 11. decembar, od 19h, Restoran Institucija, Bežanijska kosa.">
-  <meta name="theme-color" content="#0b0614">
+  <meta name="theme-color" content="#fbf7f1">
 
   <!-- Lep pregled kada se link podeli u Viberu / WhatsApp-u -->
   <meta property="og:title" content="Žurka 99 · Olivera &amp; Aleksandra">
@@ -22,18 +22,19 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Great+Vibes&family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,400;1,9..144,600&family=Great+Vibes&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="is-locked">
 
   <!-- ============ POZADINA ============ -->
   <div class="bg" aria-hidden="true">
-    <div class="aurora"><span></span><span></span><span></span><span></span><span></span></div>
+    <span class="bg__blob bg__blob--mint"></span>
+    <span class="bg__blob bg__blob--lav"></span>
+    <span class="bg__blob bg__blob--gold"></span>
+    <span class="bg__dots"></span>
     <div class="sparkles" id="sparkles"></div>
-    <div class="vignette"></div>
   </div>
-  <canvas id="fireworks" aria-hidden="true"></canvas>
   <div class="balloons" id="balloons" aria-hidden="true"></div>
   <canvas id="confetti" aria-hidden="true"></canvas>
 
@@ -44,7 +45,6 @@
     <p class="intro__hello">Stigla vam je pozivnica!</p>
 
     <div class="envelope" id="envelope" aria-hidden="true">
-      <span class="envelope__glow"></span>
       <span class="envelope__back"></span>
       <span class="envelope__letter">
         <span class="envelope__letter-text">
@@ -58,68 +58,69 @@
     </div>
 
     <button class="btn btn--big btn--pulse" id="openBtn" type="button">
-      <span aria-hidden="true">✉️</span> Otvorite pozivnicu
+      <span aria-hidden="true">💌</span> Otvorite pozivnicu
     </button>
     <p class="intro__hint">Dodirnite kovertu ili dugme</p>
-
-    <div class="intro__flash" aria-hidden="true"></div>
   </section>
 
   <!-- ============ POZIVNICA ============ -->
   <main class="invite" id="invite" hidden>
 
-    <!-- Naslov -->
+    <!-- Naslov u lučnom okviru -->
     <header class="hero">
-      <p class="hero__kicker reveal" style="--d:0">
-        <span class="orn" aria-hidden="true"></span>
-        Sa puno ljubavi vas pozivaju
-        <span class="orn orn--r" aria-hidden="true"></span>
-      </p>
+      <div class="arch reveal">
+        <div class="cluster cluster--left" id="clusterLeft" aria-hidden="true"></div>
+        <div class="cluster cluster--right" id="clusterRight" aria-hidden="true"></div>
 
-      <h1 class="hero__names reveal" style="--d:0">
-        <span class="name name--green">Olivera</span>
-        <span class="amp">&amp;</span>
-        <span class="name name--purple">Aleksandra</span>
-      </h1>
+        <div class="arch__inner">
+          <p class="kicker reveal" style="--d:1">Sa puno ljubavi vas pozivaju</p>
 
-      <div class="stage reveal" style="--d:2" aria-hidden="true">
-        <span class="stage__halo"></span>
-        <span class="stage__orbit stage__orbit--a"><i></i></span>
-        <span class="stage__orbit stage__orbit--b"><i></i></span>
-        <div class="ninety-nine">
-          <span class="nine nine--green"><span class="nine__depth">9</span><span class="nine__face">9</span></span>
-          <span class="nine nine--purple"><span class="nine__depth">9</span><span class="nine__face">9</span></span>
+          <h1 class="names reveal" style="--d:2">
+            <span class="name name--green">Olivera</span>
+            <span class="amp">&amp;</span>
+            <span class="name name--purple">Aleksandra</span>
+          </h1>
+
+          <div class="numbers reveal" style="--d:3" aria-label="99">
+            <span class="numbal numbal--green">
+              <span class="numbal__digit">9</span>
+              <svg class="numbal__string" viewBox="0 0 20 90" aria-hidden="true"><path d="M10 0c-8 15 8 25 0 40s8 25 0 50"/></svg>
+            </span>
+            <span class="numbal numbal--purple">
+              <span class="numbal__digit">9</span>
+              <svg class="numbal__string" viewBox="0 0 20 90" aria-hidden="true"><path d="M10 0c8 15-8 25 0 40s-8 25 0 50"/></svg>
+            </span>
+          </div>
+
+          <p class="hero__title reveal" style="--d:4">Žurka 99</p>
+          <p class="hero__sub reveal" style="--d:5">Zajedno punimo <strong>99&nbsp;godina</strong> — i&nbsp;to mora da se proslavi!</p>
+
+          <p class="hero__date reveal" style="--d:6">
+            <span>Petak</span><i aria-hidden="true">✦</i><span>11. decembar</span><i aria-hidden="true">✦</i><span>19h</span>
+          </p>
         </div>
       </div>
 
-      <p class="hero__title reveal" style="--d:3">Žurka 99</p>
-      <p class="hero__sub reveal" style="--d:4">Zajedno punimo <strong>99&nbsp;godina</strong> — i to mora da se proslavi!</p>
-
-      <p class="hero__date reveal" style="--d:5">
-        <span>Petak</span><i aria-hidden="true">✦</i><span>11. decembar</span><i aria-hidden="true">✦</i><span>19h</span>
-      </p>
-
-      <a href="#detalji" class="btn btn--ghost scroll-cue reveal" style="--d:6">
+      <a href="#detalji" class="btn btn--soft scroll-cue reveal" style="--d:7">
         Pogledajte detalje <span class="scroll-cue__arrow" aria-hidden="true">↓</span>
       </a>
     </header>
 
-    <!-- Trake -->
-    <div class="ribbons" aria-hidden="true">
-      <div class="ribbon ribbon--green"><div class="ribbon__track" data-text="Žurka 99 ✦ Olivera ✦ zeleno ✦ 11. decembar ✦ "></div></div>
-      <div class="ribbon ribbon--purple"><div class="ribbon__track" data-text="Žurka 99 ✦ Aleksandra ✦ ljubičasto ✦ od 19h ✦ "></div></div>
+    <!-- Traka -->
+    <div class="ribbon" aria-hidden="true">
+      <div class="ribbon__track" data-text="Žurka 99 ✦ Olivera &amp; Aleksandra ✦ 11. decembar ✦ od 19h ✦ zeleno &amp; ljubičasto ✦ "></div>
     </div>
 
     <!-- Slavljenice -->
     <section class="duo reveal" aria-labelledby="duo-title">
       <div class="sec-head">
-        <p class="eyebrow">✦ Slavljenice ✦</p>
+        <p class="eyebrow">Slavljenice</p>
         <h2 class="section-title" id="duo-title">Dve slavljenice, <em>dve boje</em></h2>
       </div>
 
       <div class="duo__grid">
-        <article class="card person person--green tilt">
-          <div class="orb" aria-hidden="true"><span class="orb__ring"></span><span class="orb__letter">O</span></div>
+        <article class="card person person--green">
+          <div class="person__balloon" aria-hidden="true" data-balloon="green"></div>
           <h3 class="person__name">Olivera</h3>
           <p class="person__meta">omiljena boja</p>
           <p class="person__color">Zelena</p>
@@ -127,28 +128,26 @@
 
         <div class="duo__plus" aria-hidden="true"><span>+</span></div>
 
-        <article class="card person person--purple tilt">
-          <div class="orb" aria-hidden="true"><span class="orb__ring"></span><span class="orb__letter">A</span></div>
+        <article class="card person person--purple">
+          <div class="person__balloon" aria-hidden="true" data-balloon="purple"></div>
           <h3 class="person__name">Aleksandra</h3>
           <p class="person__meta">omiljena boja</p>
           <p class="person__color">Ljubičasta</p>
         </article>
       </div>
 
-      <p class="duo__equals"><span aria-hidden="true">=</span> 99 godina radosti, smeha i prijateljstva</p>
+      <p class="duo__equals"><b aria-hidden="true">=</b> 99 godina radosti, smeha i prijateljstva</p>
     </section>
-
-    <div class="divider" aria-hidden="true"><span></span><i></i><b></b><i></i><span></span></div>
 
     <!-- Kada i gde -->
     <section class="card details reveal" id="detalji" aria-labelledby="details-title">
       <div class="sec-head">
-        <p class="eyebrow">✦ Zapišite ✦</p>
+        <p class="eyebrow">Zapišite</p>
         <h2 class="section-title" id="details-title">Kada i <em>gde</em></h2>
       </div>
 
       <ul class="info">
-        <li class="info__row">
+        <li class="info__row info__row--green">
           <span class="info__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="12" cy="15.5" r="1.6" class="fill"/></svg>
           </span>
@@ -157,7 +156,7 @@
             <span class="info__value">Petak, 11. decembar 2026.</span>
           </span>
         </li>
-        <li class="info__row">
+        <li class="info__row info__row--gold">
           <span class="info__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
           </span>
@@ -166,7 +165,7 @@
             <span class="info__value">u 19:00 časova</span>
           </span>
         </li>
-        <li class="info__row">
+        <li class="info__row info__row--purple">
           <span class="info__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.6"/></svg>
           </span>
@@ -182,7 +181,7 @@
         <button class="btn" id="calendarBtn" type="button">
           <span aria-hidden="true">🗓️</span> Dodaj u kalendar
         </button>
-        <a class="btn btn--ghost" id="mapBtn" target="_blank" rel="noopener"
+        <a class="btn btn--soft" id="mapBtn" target="_blank" rel="noopener"
            href="https://www.google.com/maps/search/?api=1&amp;query=Restoran%20Institucija%20Be%C5%BEanijska%20kosa%20Beograd">
           <span aria-hidden="true">🗺️</span> Kako da stignem
         </a>
@@ -192,7 +191,7 @@
     <!-- Odbrojavanje -->
     <section class="card countdown reveal" aria-labelledby="countdown-title">
       <div class="sec-head">
-        <p class="eyebrow">✦ Odbrojavamo ✦</p>
+        <p class="eyebrow">Odbrojavamo</p>
         <h2 class="section-title" id="countdown-title">Do žurke je <em>ostalo</em></h2>
       </div>
       <div class="countdown__grid" id="countdown" role="timer" aria-live="off">
@@ -207,18 +206,18 @@
     <!-- Dress code -->
     <section class="card dresscode reveal" aria-labelledby="dress-title">
       <div class="sec-head">
-        <p class="eyebrow">✦ Šta obući ✦</p>
+        <p class="eyebrow">Šta obući</p>
         <h2 class="section-title" id="dress-title">Dress <em>code</em></h2>
       </div>
       <p class="dresscode__lead">Obucite nešto <strong class="txt-green">zeleno</strong>, nešto <strong class="txt-purple">ljubičasto</strong> — ili oboje!</p>
 
       <div class="swatches">
-        <div class="swatch swatch--green tilt">
+        <div class="swatch swatch--green">
           <span class="swatch__chip" aria-hidden="true"><span class="swatch__tag">Olivera</span></span>
           <span class="swatch__name">Zelena</span>
           <span class="swatch__who">u čast Olivere</span>
         </div>
-        <div class="swatch swatch--purple tilt">
+        <div class="swatch swatch--purple">
           <span class="swatch__chip" aria-hidden="true"><span class="swatch__tag">Aleksandra</span></span>
           <span class="swatch__name">Ljubičasta</span>
           <span class="swatch__who">u čast Aleksandre</span>
@@ -234,17 +233,14 @@
       </ul>
     </section>
 
-    <div class="divider" aria-hidden="true"><span></span><i></i><b></b><i></i><span></span></div>
-
     <!-- Ulaznica -->
     <section class="ticket-wrap reveal" aria-labelledby="ticket-title">
       <div class="sec-head">
-        <p class="eyebrow">✦ Važno ✦</p>
+        <p class="eyebrow">Važno</p>
         <h2 class="section-title" id="ticket-title">Vaša <em>ulaznica</em></h2>
       </div>
 
-      <div class="ticket-shadow">
-      <div class="ticket tilt">
+      <div class="ticket">
         <div class="ticket__main">
           <span class="ticket__no" aria-hidden="true">№ 099</span>
           <p class="ticket__label">Ulaznica za Žurku 99</p>
@@ -253,35 +249,16 @@
             Na žurku se ulazi sa <strong>dva balona</strong>:<br>
             jednim <strong class="txt-green">zelenim</strong> i jednim <strong class="txt-purple">ljubičastim</strong>.
           </p>
-          <p class="ticket__note">Ne zaboravite ih — bez balona nema ulaska! 😉🎈</p>
+          <p class="ticket__note">Ne zaboravite ih — bez balona nema ulaska! 😉</p>
         </div>
 
         <div class="ticket__stub" aria-hidden="true">
-          <svg class="ticket__balloon ticket__balloon--green" viewBox="0 0 100 170">
-            <defs>
-              <radialGradient id="tbG" cx="35%" cy="30%" r="75%">
-                <stop offset="0" stop-color="#b9f5dc"/><stop offset=".25" stop-color="#17a873"/>
-                <stop offset=".65" stop-color="#076b47"/><stop offset="1" stop-color="#022016"/>
-              </radialGradient>
-            </defs>
-            <path d="M50 4C77 4 96 27 96 56c0 33-27 56-42 62l4 8H42l4-8C31 112 4 89 4 56 4 27 23 4 50 4z" fill="url(#tbG)"/>
-            <ellipse cx="33" cy="32" rx="9" ry="14" fill="#fff" opacity=".55" transform="rotate(-25 33 32)"/>
-            <path d="M50 126c-8 12 8 20 0 30s6 12 2 14" fill="none" stroke="#e9dcff" stroke-width="2" opacity=".8"/>
-          </svg>
-          <svg class="ticket__balloon ticket__balloon--purple" viewBox="0 0 100 170">
-            <defs>
-              <radialGradient id="tbP" cx="35%" cy="30%" r="75%">
-                <stop offset="0" stop-color="#dccaff"/><stop offset=".25" stop-color="#7a42d6"/>
-                <stop offset=".65" stop-color="#4f1ea8"/><stop offset="1" stop-color="#16052f"/>
-              </radialGradient>
-            </defs>
-            <path d="M50 4C77 4 96 27 96 56c0 33-27 56-42 62l4 8H42l4-8C31 112 4 89 4 56 4 27 23 4 50 4z" fill="url(#tbP)"/>
-            <ellipse cx="33" cy="32" rx="9" ry="14" fill="#fff" opacity=".55" transform="rotate(-25 33 32)"/>
-            <path d="M50 126c8 12-8 20 0 30s-6 12-2 14" fill="none" stroke="#e9dcff" stroke-width="2" opacity=".8"/>
-          </svg>
+          <div class="ticket__balloons">
+            <span data-balloon="green"></span>
+            <span data-balloon="purple"></span>
+          </div>
           <p class="ticket__admit">ULAZ<br><span>1 + 1</span></p>
         </div>
-      </div>
       </div>
     </section>
 
@@ -290,7 +267,7 @@
       <h2 class="finale__title" id="finale-title">Vidimo se!</h2>
       <p class="finale__text">Vaš dolazak je naš najlepši poklon.</p>
       <p class="finale__sign">Olivera &amp; Aleksandra</p>
-      <button class="btn btn--big" id="partyBtn" type="button"><span aria-hidden="true">🎆</span> Pokreni vatromet!</button>
+      <button class="btn btn--big" id="partyBtn" type="button"><span aria-hidden="true">🎉</span> Još konfeta i balona!</button>
       <p class="finale__hint"><span aria-hidden="true">🎈</span> Savet: dodirnite balon da ga probušite</p>
       <p class="finale__foot">11 · 12 · 2026 &nbsp;✦&nbsp; Restoran Institucija</p>
     </section>
@@ -299,7 +276,7 @@
 
   <!-- ============ KALENDAR ============ -->
   <dialog class="modal" id="calendarModal" aria-labelledby="modal-title">
-    <p class="eyebrow">✦ Žurka 99 ✦</p>
+    <p class="eyebrow">Žurka 99</p>
     <h2 class="modal__title" id="modal-title">Dodajte žurku u kalendar</h2>
     <p class="modal__text">Izaberite vaš telefon ili kalendar:</p>
     <div class="modal__actions">
@@ -309,7 +286,7 @@
       <button class="btn btn--purple" id="icsBtn" type="button">
         <span aria-hidden="true">🍎</span> iPhone / Outlook / ostali
       </button>
-      <button class="btn btn--ghost" id="closeModal" type="button">Zatvori</button>
+      <button class="btn btn--soft" id="closeModal" type="button">Zatvori</button>
     </div>
   </dialog>
 
