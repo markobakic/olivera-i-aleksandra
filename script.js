@@ -9,12 +9,7 @@
   const FX = LITE ? 0.55 : 1;                                          // koliko konfeta
 
   const EVENT = {
-    start: new Date(2026, 11, 11, 19, 0, 0),            // 11. decembar 2026, 19:00
-    title: 'Žurka 99 – Olivera & Aleksandra',
-    location: 'Restoran Institucija, Bežanijska kosa, Beograd',
-    details: 'Olivera i Aleksandra zajedno pune 99 godina! Dress code: zeleno i ljubičasto. Ulaznica: 2 balona – jedan zeleni i jedan ljubičasti.',
-    gStart: '20261211T190000',
-    gEnd: '20261212T010000'
+    start: new Date(2026, 11, 11, 19, 0, 0)             // 11. decembar 2026, 19:00
   };
 
   const $ = (sel) => document.querySelector(sel);
@@ -443,74 +438,6 @@
     updateCountdown();
     cdTimer = setInterval(updateCountdown, 1000);
   }
-
-  /* =========================================================
-     KALENDAR
-     ========================================================= */
-  const modal = $('#calendarModal');
-
-  $('#googleCal').href =
-    'https://calendar.google.com/calendar/render?action=TEMPLATE' +
-    '&text=' + encodeURIComponent(EVENT.title) +
-    '&dates=' + EVENT.gStart + '/' + EVENT.gEnd +
-    '&ctz=Europe/Belgrade' +
-    '&location=' + encodeURIComponent(EVENT.location) +
-    '&details=' + encodeURIComponent(EVENT.details);
-
-  const icsEscape = (s) => s.replace(/\\/g, '\\\\').replace(/,/g, '\\,').replace(/;/g, '\\;');
-
-  function buildIcs() {
-    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    return [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Zurka 99//Pozivnica//SR',
-      'CALSCALE:GREGORIAN',
-      'METHOD:PUBLISH',
-      'BEGIN:VEVENT',
-      'UID:zurka99-20261211@olivera-aleksandra',
-      'DTSTAMP:' + stamp,
-      'DTSTART;TZID=Europe/Belgrade:' + EVENT.gStart,
-      'DTEND;TZID=Europe/Belgrade:' + EVENT.gEnd,
-      'SUMMARY:' + icsEscape(EVENT.title),
-      'LOCATION:' + icsEscape(EVENT.location),
-      'DESCRIPTION:' + icsEscape(EVENT.details),
-      'BEGIN:VALARM',
-      'TRIGGER:-P1D',
-      'ACTION:DISPLAY',
-      'DESCRIPTION:' + icsEscape('Sutra je Žurka 99! Ponesite zeleni i ljubičasti balon.'),
-      'END:VALARM',
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-  }
-
-  function openModal() {
-    if (typeof modal.showModal === 'function') modal.showModal();
-    else modal.setAttribute('open', '');
-  }
-  function closeModal() {
-    if (typeof modal.close === 'function') modal.close();
-    else modal.removeAttribute('open');
-  }
-
-  $('#calendarBtn').addEventListener('click', openModal);
-  $('#closeModal').addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-  $('#googleCal').addEventListener('click', () => {
-    closeModal();
-    showToast('Otvara se Google kalendar — samo pritisnite „Sačuvaj“.');
-  });
-  $('#icsBtn').addEventListener('click', () => {
-    const a = document.createElement('a');
-    a.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(buildIcs());
-    a.download = 'zurka-99.ics';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    closeModal();
-    showToast('Gotovo! Otvorite preuzeti fajl i potvrdite dodavanje u kalendar.');
-  });
 
   /* =========================================================
      DUGME "JOŠ KONFETA I BALONA"
